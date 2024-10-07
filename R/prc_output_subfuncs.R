@@ -413,6 +413,7 @@ prc_ms_anom_nt <- function(process_output){
 #' @param process_output the output from `prc_process`
 #' @param event_filter the event type of interest for the analysis; can be either
 #'                     `a`, `b`, `both`, or `neither`
+#' @param facet vector of variables to be used to facet the graph
 #'
 #' @return if analysis was executed by year or greater, a P Prime control chart
 #'         is returned with outliers marked with orange dots
@@ -422,7 +423,8 @@ prc_ms_anom_nt <- function(process_output){
 #'         the data removed in the regression are also returned
 #'
 prc_ss_anom_at <- function(process_output,
-                           event_filter){
+                           event_filter,
+                           facet = NULL){
 
   cli::cli_div(theme = list(span.code = list(color = 'blue')))
 

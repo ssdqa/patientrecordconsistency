@@ -4,13 +4,15 @@
 \alias{prc_ss_anom_at}
 \title{\emph{Single Site, Anomaly Detection, Across Time}}
 \usage{
-prc_ss_anom_at(process_output, event_filter)
+prc_ss_anom_at(process_output, event_filter, facet = NULL)
 }
 \arguments{
 \item{process_output}{the output from \code{prc_process}}
 
 \item{event_filter}{the event type of interest for the analysis; can be either
 \code{a}, \code{b}, \code{both}, or \code{neither}}
+
+\item{facet}{vector of variables to be used to facet the graph}
 }
 \value{
 if analysis was executed by year or greater, a P Prime control chart
