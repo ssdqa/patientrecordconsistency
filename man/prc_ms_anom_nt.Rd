@@ -15,6 +15,11 @@ anomalous, the color of the dot represents the jaccard similarity index
 for a given follow up window, and the size of the dot represents the mean index
 across all sites
 
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    if there were no groups eligible for analysis, a heat map showing the jaccard index
+    and a dot plot showing each site's average standard deviation away from the mean
+    index is returned instead
+}\if{html}{\out{</div>}}
+
 SD: ', round(sd_val,2),
 SD: ', round(sd_val,2),
 }

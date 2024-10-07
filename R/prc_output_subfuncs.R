@@ -301,6 +301,10 @@ prc_ss_anom_nt <- function(process_output){
 #'         for a given follow up window, and the size of the dot represents the mean index
 #'         across all sites
 #'
+#'         if there were no groups eligible for analysis, a heat map showing the jaccard index
+#'         and a dot plot showing each site's average standard deviation away from the mean
+#'         index is returned instead
+#'
 prc_ms_anom_nt <- function(process_output){
 
   comparison_col = 'jaccard_index'
