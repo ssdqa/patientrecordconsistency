@@ -97,10 +97,10 @@ prc_process <- function(cohort,
                                     grouped_list = grouped_list,
                                     event_tbl = prc_event_file,
                                     grp_breaks = fu_breaks
-                                    ) %>%
-        separate_wider_delim(cols = grp, delim = "_", names = c(site_col, 'fu_bin'))
+                                    )
 
-      prc_tbl <- prc_tbl$summary_output
+      prc_tbl <- prc_tbl$summary_output %>%
+        separate_wider_delim(cols = grp, delim = "_", names = c(site_col, 'fu_bin'))
 
       prc_ptlv <- prc_tbl$pt_lv_output
 
@@ -111,10 +111,10 @@ prc_process <- function(cohort,
                                          grouped_list = grouped_list,
                                          event_tbl = prc_event_file,
                                          grp_breaks = fu_breaks
-                                         ) %>%
-        separate_wider_delim(cols = grp, delim = "_", names = c('site', 'fu_bin'))
+                                         )
 
-      prc_tbl_jacc <- prc_tbl_jacc$summary_output
+      prc_tbl_jacc <- prc_tbl_jacc$summary_output %>%
+        separate_wider_delim(cols = grp, delim = "_", names = c('site', 'fu_bin'))
 
       prc_ptlv <- prc_tbl$pt_lv_output
 
