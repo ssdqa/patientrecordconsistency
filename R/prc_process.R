@@ -145,23 +145,35 @@ prc_process <- function(cohort,
 
   }else{
 
-    prc_tbl_int <- compute_fot(cohort = cohort_prep,
-                           site_col = site_col,
-                           reduce_id = NULL,
-                           time_period = time_period,
-                           time_span = time_span,
-                           site_list = site_list_adj,
-                           check_func = function(dat){
-                             compute_event_counts(cohort = dat,
-                                                  grouped_list = grouped_list,
-                                                  site_col = site_col,
-                                                  time = time,
-                                                  event_tbl = prc_event_file)
-                           })
+      prc_tbl <- compute_fot(cohort = cohort_prep,
+                             site_col = site_col,
+                             reduce_id = NULL,
+                             time_period = time_period,
+                             time_span = time_span,
+                             site_list = site_list_adj,
+                             check_func = function(dat){
+                               compute_event_counts(cohort = dat,
+                                                    grouped_list = grouped_list,
+                                                    site_col = site_col,
+                                                    time = time,
+                                                    event_tbl = prc_event_file)[1]
+                             })
 
-    prc_tbl <- prc_tbl_int$summary_output
-
-    prc_ptlv <- prc_tbl_int$pt_lv_output
+      if(patient_level_tbl){
+        prc_pt_lv <- compute_fot(cohort = cohort_prep,
+                                    site_col = site_col,
+                                    reduce_id = NULL,
+                                    time_period = time_period,
+                                    time_span = time_span,
+                                    site_list = site_list_adj,
+                                    check_func = function(dat){
+                                      compute_event_counts(cohort = dat,
+                                                           grouped_list = grouped_list,
+                                                           site_col = site_col,
+                                                           time = time,
+                                                           event_tbl = prc_event_file)[2]
+                               })
+       }
 
     if(multi_or_single_site == 'single' & anomaly_or_exploratory == 'anomaly'){
 

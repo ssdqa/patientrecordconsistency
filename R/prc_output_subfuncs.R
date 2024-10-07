@@ -320,7 +320,8 @@ prc_ms_anom_nt <- function(process_output){
                         #'SD: ', round(sd_val,2),
                         "\nMedian Index: ",round(median_val,2)
                         #"\nMAD: ", round(mad_val,2)
-             )) #%>%
+             )) %>%
+      mutate(anomaly_yn = ifelse(anomaly_yn == 'no outlier in group', 'not outlier', anomaly_yn)#%>%
       #filter(anomaly_yn != 'no outlier in group')
 
     plt<-ggplot(dat_to_plot,
