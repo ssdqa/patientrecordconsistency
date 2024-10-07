@@ -92,31 +92,31 @@ prc_process <- function(cohort,
 
     if(multi_or_single_site == 'single' & anomaly_or_exploratory == 'anomaly'){
 
-      prc_tbl <- compute_prc_ntanom(cohort = cohort_prep,
+      prc_tbl_int <- compute_prc_ntanom(cohort = cohort_prep,
                                     site_col = site_col,
                                     grouped_list = grouped_list,
                                     event_tbl = prc_event_file,
                                     grp_breaks = fu_breaks
                                     )
 
-      prc_tbl <- prc_tbl$summary_output %>%
+      prc_tbl <- prc_tbl_int$summary_output %>%
         separate_wider_delim(cols = grp, delim = "_", names = c(site_col, 'fu_bin'))
 
-      prc_ptlv <- prc_tbl$pt_lv_output
+      prc_ptlv <- prc_tbl_int$pt_lv_output
 
     }else if(multi_or_single_site == 'multi' & anomaly_or_exploratory == 'anomaly'){
 
-      prc_tbl_jacc <- compute_prc_ntanom(cohort = cohort_prep,
+      prc_tbl_jacc_int <- compute_prc_ntanom(cohort = cohort_prep,
                                          site_col = site_col,
                                          grouped_list = grouped_list,
                                          event_tbl = prc_event_file,
                                          grp_breaks = fu_breaks
                                          )
 
-      prc_tbl_jacc <- prc_tbl_jacc$summary_output %>%
+      prc_tbl_jacc <- prc_tbl_jacc_int$summary_output %>%
         separate_wider_delim(cols = grp, delim = "_", names = c('site', 'fu_bin'))
 
-      prc_ptlv <- prc_tbl$pt_lv_output
+      prc_ptlv <- prc_tbl_jacc_int$pt_lv_output
 
       prc_tbl_int <- compute_dist_anomalies(df_tbl = prc_tbl_jacc,
                                             grp_vars = c('fu_bin'),
@@ -131,21 +131,21 @@ prc_process <- function(cohort,
 
     }else{
 
-      prc_tbl <- compute_event_counts(cohort = cohort_prep,
+      prc_tbl_int <- compute_event_counts(cohort = cohort_prep,
                                       grouped_list = grouped_list,
                                       site_col = site_col,
                                       time = time,
                                       event_tbl = prc_event_file)
 
-      prc_tbl <- prc_tbl$summary_output
+      prc_tbl <- prc_tbl_int$summary_output
 
-      prc_ptlv <- prc_tbl$pt_lv_output
+      prc_ptlv <- prc_tbl_int$pt_lv_output
 
       }
 
   }else{
 
-    prc_tbl <- compute_fot(cohort = cohort_prep,
+    prc_tbl_int <- compute_fot(cohort = cohort_prep,
                            site_col = site_col,
                            reduce_id = NULL,
                            time_period = time_period,
@@ -159,9 +159,9 @@ prc_process <- function(cohort,
                                                   event_tbl = prc_event_file)
                            })
 
-    prc_tbl <- prc_tbl$summary_output
+    prc_tbl <- prc_tbl_int$summary_output
 
-    prc_ptlv <- prc_tbl$pt_lv_output
+    prc_ptlv <- prc_tbl_int$pt_lv_output
 
     if(multi_or_single_site == 'single' & anomaly_or_exploratory == 'anomaly'){
 
