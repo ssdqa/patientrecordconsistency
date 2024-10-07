@@ -166,7 +166,7 @@ prc_ss_exp_at <- function(process_output){
     labs(y = 'Proportion Patients',
          x = '',
          title = 'Proportion Patients with Each Event',
-         fill = 'Event Type')
+         color = 'Event Type')
 
   g[["metadata"]] <- tibble('pkg_backend' = 'plotly',
                             'tooltip' = TRUE)
@@ -366,7 +366,10 @@ prc_ms_anom_nt <- function(process_output){
                                    tooltip = text)) +
       geom_tile_interactive() +
       theme_minimal() +
-      scale_fill_ssdqa(discrete = FALSE, palette = 'diverging')
+      scale_fill_ssdqa(discrete = FALSE, palette = 'diverging') +
+      labs(y = 'Years of F/U',
+           x = 'Site',
+           fill = 'Jaccard Index')
 
     # Test Site Score using SD Computation
     test_site_score <- process_output %>%
@@ -390,7 +393,9 @@ prc_ms_anom_nt <- function(process_output){
       #geom_hline(yintercept = 1, linetype = 'dotted', color = 'gray', linewidth = 1) +
       #geom_hline(yintercept = -1, linetype = 'dotted', color = 'gray', linewidth = 1) +
       #ylim(ylim_min, ylim_max) +
-      labs(title = 'Average Standard Deviation per Site')
+      labs(title = 'Average Standard Deviation per Site',
+           y = 'Average Standard Deviation',
+           x = 'Site')
 
     plt[["metadata"]] <- tibble('pkg_backend' = 'ggiraph',
                                 'tooltip' = TRUE)
