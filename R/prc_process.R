@@ -43,6 +43,8 @@
 #'
 #' @return a dataframe summarizing how often two events occur and co-occur within a patient record
 #'
+#' @export
+#'
 prc_process <- function(cohort,
                         prc_event_file,
                         omop_or_pcornet,
