@@ -2,7 +2,7 @@
 % Please edit documentation in R/prc_process.R
 \name{prc_process}
 \alias{prc_process}
-\title{Patient Record Consistency -- PCORnet}
+\title{Patient Record Consistency}
 \usage{
 prc_process(
   cohort,
@@ -85,5 +85,5 @@ to \code{year}, but other time periods such as \code{month} or \code{week} are a
 a dataframe summarizing how often two events occur and co-occur within a patient record
 }
 \description{
-Patient Record Consistency -- PCORnet
+Patient Record Consistency
 }

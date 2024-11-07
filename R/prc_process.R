@@ -1,5 +1,5 @@
 
-#' Patient Record Consistency -- PCORnet
+#' Patient Record Consistency
 #'
 #' @param cohort cohort for SSDQA testing; required fields:
 #' - `site`

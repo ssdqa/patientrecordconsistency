@@ -2,6 +2,7 @@
 
 export("%>%")
 export(prc_output)
+export(prc_process)
 import(argos)
 import(cli)
 import(dplyr)
