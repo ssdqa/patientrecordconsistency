@@ -14,6 +14,7 @@ A data frame with 2 rows and 7 columns
 \item{domain_tbl}{The name of the CDM table associated with the domain where concepts associated with the event can be found}
 \item{concept_field}{The name of the column in the domain table that contains the concepts of interest}
 \item{date_field}{The name of the column in the domain table that contains dates to be used for establishing the sequence of events.}
+\item{vocabulary_field}{(PCORnet only) The name of the column in the domain table where the vocabulary type is stored}
 \item{codeset_name}{The name of the codeset (found in the file_subdirectory) to be used to define the event}
 \item{filter_logic}{(optional) a string to be parsed as logic to filter the domain_tbl as needed to best represent the event}
 }
