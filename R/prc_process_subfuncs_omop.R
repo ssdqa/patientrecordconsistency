@@ -131,7 +131,7 @@ compute_event_counts_omop <- function(cohort,
     group_by(!!!syms(new_grp), event_a_num, event_a_name,
              event_b_num, event_b_name) %>%
     summarise(pt_ct = n()) %>%
-    group_by(!!sym(site_col)) %>%
+    group_by(!!!syms(new_grp)) %>%
     mutate(total_pts = sum(pt_ct)) %>% ungroup()
 
 
@@ -233,7 +233,7 @@ compute_prc_ntanom_omop <- function(cohort,
 
   ## Get Patient - Level data
   event_ptlv <- eventa %>% full_join(eventb) %>%
-    full_join(cohort %>% select(!!!sym(new_grp), person_id, fu) %>% collect()) %>%
+    full_join(cohort %>% select(!!!syms(new_grp), person_id, fu) %>% collect()) %>%
     mutate(event_a_num = ifelse(is.na(event_a_num), 0, event_a_num),
            event_b_num = ifelse(is.na(event_b_num), 0, event_b_num)) %>%
     ungroup() %>%

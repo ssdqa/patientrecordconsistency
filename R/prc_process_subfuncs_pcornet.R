@@ -130,7 +130,7 @@ compute_event_counts_pcnt <- function(cohort,
     group_by(!!!syms(new_grp), event_a_num, event_a_name,
              event_b_num, event_b_name) %>%
     summarise(pt_ct = n()) %>%
-    group_by(!!sym(site_col)) %>%
+    group_by(!!!syms(new_grp)) %>%
     mutate(total_pts = sum(pt_ct)) %>% ungroup()
 
 
