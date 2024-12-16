@@ -7,7 +7,7 @@
 \format{
 \subsection{prc_event_file}{
 
-A data frame with 2 rows and 7 columns
+A data frame with 7 columns
 \describe{
 \item{event}{A or B; represents which of the two events should occur first and second in the sequence}
 \item{event_label}{An arbitrary string to label what the event is}

@@ -1,13 +1,25 @@
 Package: patientrecordconsistency
-Title: Patient Record Consistency
+Title: Evaluate the Consistency of Event Occurrence in Patient Records
 Version: 0.0.0.9000
 Authors@R: 
-    person("Kaleigh", "Wieand", , "wieandk@chop.edu", role = c("aut", "cre"))
-Description: This package represents one of several modules in the broader SSDQA ecosystem. The Patient Record Consistency module assesses the occurrence and co-occurrence of two events for each patient record in the cohort.
+    c(person("Hanieh", "Razzaghi", email = "razzaghih@chop.edu", role = c("aut"),
+             comment = c(ORCID = "0000-0001-5001-1590")),
+      person("Kaleigh", "Wieand", email = "wieandk@chop.edu", role = c("aut", "cre"),
+             comment = c(ORCID = "0009-0003-7477-2601")),
+      person("Kimberley", "Dickinson", email = "dickinsokl@chop.edu", role = c("aut"),
+             comment = c(ORCID = "0000-0001-9523-056X")),
+      person("Charles", "Bailey", email = "baileyc@chop.edu", role = c("aut"),
+             comment = c(ORCID = "0000-0002-8967-0662")))
+Description: The Patient Record Consistency module, part of the larger SSDQA ecosystem, tests the
+    consistency of clinical data representation within a patient's record. The goal is to ensure that
+    the patient's information is confirmatory and complete, such that two events that are expected to
+    co-exist do both occur within the same patient (i.e. a leukemia diagnosis and chemotherapy).
 License: MPL-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
+URL: https://github.com/ssdqa/patientrecordconsistency, https://pedsnetapps.chop.edu/metadata/handle/20.500.14642/31
+BugReports: https://github.com/ssdqa/patientrecordconsistency/issues
 Imports: 
     cli (>= 3.6.3),
     dplyr (>= 1.1.4),

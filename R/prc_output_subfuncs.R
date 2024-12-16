@@ -13,7 +13,7 @@
 NULL
 
 
-#' *Single Site, Exploratory, No Time*
+#' *Single Site, Exploratory, Cross-Sectional*
 #'
 #' @param process_output the output from `prc_process`
 #'
@@ -21,7 +21,7 @@ NULL
 #'         patients who have only event a, only event b, both events, or neither event present
 #'         in their record
 #'
-prc_ss_exp_nt <- function(process_output){
+prc_ss_exp_cs <- function(process_output){
 
   expand_cts <- process_output %>%
     uncount(pt_ct)
@@ -67,7 +67,7 @@ prc_ss_exp_nt <- function(process_output){
 }
 
 
-#' *Multi Site, Exploratory, No Time*
+#' *Multi Site, Exploratory, Cross-Sectional*
 #'
 #' @param process_output the output from `prc_process`
 #'
@@ -75,7 +75,7 @@ prc_ss_exp_nt <- function(process_output){
 #'         only event a, only event b, both events, or neither event present in
 #'         their record
 #'
-prc_ms_exp_nt <- function(process_output){
+prc_ms_exp_cs <- function(process_output){
 
   expand_cts <- process_output %>%
     uncount(pt_ct)
@@ -121,14 +121,14 @@ prc_ms_exp_nt <- function(process_output){
 }
 
 
-#' *Single Site, Exploratory, Across Time*
+#' *Single Site, Exploratory, Longitudinal*
 #'
 #' @param process_output the output from `prc_process`
 #'
 #' @return a line graph the displaying the proportion of patients with only event a,
 #'         only event b, both events, or neither event across time
 #'
-prc_ss_exp_at <- function(process_output){
+prc_ss_exp_la <- function(process_output){
 
   expand_cts <- process_output %>%
     uncount(pt_ct)
@@ -176,7 +176,7 @@ prc_ss_exp_at <- function(process_output){
 }
 
 
-#' *Multi Site, Exploratory, Across Time*
+#' *Multi Site, Exploratory, Longitudinal*
 #'
 #' @param process_output the output from `prc_process`
 #' @param dist_from_stat the statistic from which distance should be measured
@@ -185,7 +185,7 @@ prc_ss_exp_at <- function(process_output){
 #' @return a line graph displaying the distance from the overall mean or median
 #'         proportion of patients for each site and event type
 #'
-prc_ms_exp_at <- function(process_output,
+prc_ms_exp_la <- function(process_output,
                           dist_from_stat = 'mean'){
 
   cli::cli_div(theme = list(span.code = list(color = 'blue')))
@@ -259,14 +259,14 @@ prc_ms_exp_at <- function(process_output,
 }
 
 
-#' *Single Site, Anomaly Detection, No Time*
+#' *Single Site, Anomaly Detection, Cross-Sectional*
 #'
 #' @param process_output the output from `prc_process`
 #'
 #' @return a bar graph displaying the jaccard similarity index for the two events
 #'         within each user defined follow up window
 #'
-prc_ss_anom_nt <- function(process_output){
+prc_ss_anom_cs <- function(process_output){
 
 
   dat_to_plot <- process_output %>%
@@ -292,7 +292,7 @@ prc_ss_anom_nt <- function(process_output){
 }
 
 
-#' *Multi Site, Anomaly Detection, No Time*
+#' *Multi Site, Anomaly Detection, Cross-Sectional*
 #'
 #' @param process_output the output from `prc_process`
 #'
@@ -305,7 +305,7 @@ prc_ss_anom_nt <- function(process_output){
 #'         and a dot plot showing each site's average standard deviation away from the mean
 #'         index is returned instead
 #'
-prc_ms_anom_nt <- function(process_output){
+prc_ms_anom_cs <- function(process_output){
 
   comparison_col = 'jaccard_index'
 
@@ -417,7 +417,7 @@ prc_ms_anom_nt <- function(process_output){
 }
 
 
-#' *Single Site, Anomaly Detection, Across Time*
+#' *Single Site, Anomaly Detection, Longitudinal*
 #'
 #' @param process_output the output from `prc_process`
 #' @param event_filter the event type of interest for the analysis; can be either
@@ -431,7 +431,7 @@ prc_ms_anom_nt <- function(process_output){
 #'         conducted and outliers are marked with red dots. the graphs representing
 #'         the data removed in the regression are also returned
 #'
-prc_ss_anom_at <- function(process_output,
+prc_ss_anom_la <- function(process_output,
                            event_filter,
                            facet = NULL){
 
@@ -516,7 +516,7 @@ prc_ss_anom_at <- function(process_output,
 }
 
 
-#' *Multi Site, Anomaly Detection, Across Time*
+#' *Multi Site, Anomaly Detection, Longitudinal*
 #'
 #' @param process_output the output from `prc_process`
 #' @param event_filter the event type of interest for the analysis; can be either
@@ -530,7 +530,7 @@ prc_ss_anom_at <- function(process_output,
 #'    3) a bar graph with the Euclidean distance value for each site, with the average
 #'    proportion as the fill
 #'
-prc_ms_anom_at <- function(process_output,
+prc_ms_anom_la <- function(process_output,
                            event_filter){
 
   cli::cli_div(theme = list(span.code = list(color = 'blue')))

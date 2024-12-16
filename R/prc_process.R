@@ -43,6 +43,8 @@
 #'
 #' @return a dataframe summarizing how often two events occur and co-occur within a patient record
 #'
+#' @example inst/example-prc_process_output.R
+#'
 #' @export
 #'
 prc_process <- function(cohort,
@@ -66,7 +68,7 @@ prc_process <- function(cohort,
   if(!anomaly_or_exploratory %in% c('anomaly', 'exploratory')){cli::cli_abort('Invalid argument for {.code anomaly_or_exploratory}: please enter either {.code anomaly} or {.code exploratory}')}
 
   ## parameter summary output
-  output_type <- suppressWarnings(param_summ(check_string = 'pes',
+  output_type <- suppressWarnings(param_summ(check_string = 'prc',
                                              as.list(environment())))
 
   if(tolower(omop_or_pcornet) == 'omop'){

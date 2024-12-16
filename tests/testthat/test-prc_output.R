@@ -19,7 +19,7 @@ test_that('single site, exploratory, no time', {
                             total_pts = c(250, 250, 250, 250, 250, 250, 250, 250, 250))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ss_exp_nt'))
+                             output_function = 'prc_ss_exp_cs'))
 
 })
 
@@ -35,7 +35,7 @@ test_that('multi site, exploratory, no time', {
                             total_pts = c(250, 250, 250, 250, 250, 250, 250, 250, 250))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ms_exp_nt'))
+                             output_function = 'prc_ms_exp_cs'))
 
 })
 
@@ -55,7 +55,7 @@ test_that('single site, anomaly detection, no time', {
                             'concept2_prop' = c(0.1,0.2,0.3))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ss_anom_nt'))
+                             output_function = 'prc_ss_anom_cs'))
 
 })
 
@@ -88,10 +88,10 @@ test_that('multi site, anomaly detection, no time', {
                             'anomaly_yn' = c('no outlier', 'outlier', 'outlier'))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ms_anom_nt'))
+                             output_function = 'prc_ms_anom_cs'))
 
   expect_no_error(prc_output(process_output = tbl_test %>% dplyr::mutate(anomaly_yn = 'no outlier in group'),
-                             output_function = 'prc_ms_anom_nt'))
+                             output_function = 'prc_ms_anom_cs'))
 
 })
 
@@ -116,7 +116,7 @@ test_that('single site, exploratory, across time', {
                                                'year', 'year', 'year', 'year', 'year'))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ss_exp_at'))
+                             output_function = 'prc_ss_exp_la'))
 
 })
 
@@ -140,7 +140,7 @@ test_that('multi site, exploratory, across time', {
                                                'year', 'year', 'year', 'year', 'year'))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ms_exp_at'))
+                             output_function = 'prc_ms_exp_la'))
 
 })
 
@@ -169,7 +169,7 @@ test_that('single site, anomaly detection, across time -- year', {
 
   expect_no_error(prc_output(process_output = tbl_test,
                              event_filter = 'a',
-                             output_function = 'prc_ss_anom_at'))
+                             output_function = 'prc_ss_anom_la'))
 
 })
 
@@ -214,7 +214,7 @@ test_that('single site, anomaly detection, across time -- month', {
 
   expect_no_error(prc_output(process_output = tbl_test,
                              event_filter = 'a',
-                             output_function = 'prc_ss_anom_at'))
+                             output_function = 'prc_ss_anom_la'))
 
 })
 
@@ -245,6 +245,6 @@ test_that('multi site, anomaly detection, across time', {
 
   expect_no_error(prc_output(process_output = tbl_test,
                              event_filter = 'both',
-                             output_function = 'prc_ms_anom_at'))
+                             output_function = 'prc_ms_anom_la'))
 
 })

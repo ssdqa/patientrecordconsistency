@@ -1,5 +1,5 @@
 
-#' Patient Record Consistency Visualizations
+#' Patient Record Consistency -- Output Generation
 #'
 #' @param process_output the summary output from `prc_process`
 #' @param output_function the name of the output function that should be executed; this is provided
@@ -12,47 +12,49 @@
 #' @return a graph visualizing the output from `prc_process`; see individual functions for
 #'         more specific details
 #'
+#' @example inst/example-prc_process_output.R
+#'
 #' @export
 #'
 prc_output <- function(process_output,
                        output_function,
                        dist_from_stat = 'mean',
-                       event_filter){
+                       event_filter = NULL){
 
 
-  if(output_function == 'prc_ss_exp_nt'){
+  if(output_function == 'prc_ss_exp_cs'){
 
-    prc_output <- prc_ss_exp_nt(process_output = process_output)
+    prc_output <- prc_ss_exp_cs(process_output = process_output)
 
-  }else if(output_function == 'prc_ms_exp_nt'){
+  }else if(output_function == 'prc_ms_exp_cs'){
 
-    prc_output <- prc_ms_exp_nt(process_output = process_output)
+    prc_output <- prc_ms_exp_cs(process_output = process_output)
 
-  }else if(output_function == 'prc_ss_anom_nt'){
+  }else if(output_function == 'prc_ss_anom_cs'){
 
-    prc_output <- prc_ss_anom_nt(process_output = process_output)
+    prc_output <- prc_ss_anom_cs(process_output = process_output)
 
-  }else if(output_function == 'prc_ms_anom_nt'){
+  }else if(output_function == 'prc_ms_anom_cs'){
 
-    prc_output <- prc_ms_anom_nt(process_output = process_output)
+    prc_output <- prc_ms_anom_cs(process_output = process_output)
 
-  }else if(output_function == 'prc_ss_exp_at'){
+  }else if(output_function == 'prc_ss_exp_la'){
 
-    prc_output <- prc_ss_exp_at(process_output = process_output)
+    prc_output <- prc_ss_exp_la(process_output = process_output)
 
-  }else if(output_function == 'prc_ms_exp_at'){
+  }else if(output_function == 'prc_ms_exp_la'){
 
-    prc_output <- prc_ms_exp_at(process_output = process_output,
+    prc_output <- prc_ms_exp_la(process_output = process_output,
                                 dist_from_stat = dist_from_stat)
 
-  }else if(output_function == 'prc_ss_anom_at'){
+  }else if(output_function == 'prc_ss_anom_la'){
 
-    prc_output <- prc_ss_anom_at(process_output = process_output,
+    prc_output <- prc_ss_anom_la(process_output = process_output,
                                  event_filter = event_filter)
 
-  }else if(output_function == 'prc_ms_anom_at'){
+  }else if(output_function == 'prc_ms_anom_la'){
 
-    prc_output <- prc_ms_anom_at(process_output = process_output,
+    prc_output <- prc_ms_anom_la(process_output = process_output,
                                  event_filter = event_filter)
 
   }else{cli::cli_abort('Please enter a valid output function for this check type.')}

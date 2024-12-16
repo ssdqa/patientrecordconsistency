@@ -256,6 +256,7 @@ compute_prc_ntanom_pcnt <- function(cohort,
 
   binned_fu_time <- event_type_cts %>%
     ungroup() %>%
+    mutate(fu = as.numeric(fu)) %>%
     mutate(fu_bins = cut(fu, breaks = grp_breaks, right = FALSE)) %>%
     unite(facet_col, !!!syms(grouped_list), sep = '_')
 
