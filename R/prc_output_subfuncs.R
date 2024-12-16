@@ -441,7 +441,8 @@ prc_ss_anom_la <- function(process_output,
     check_var <- NULL
   }else{cli::cli_abort('Invalid event_filter: please choose {.code A}, {.code B}, {.code Both}, or {.code Neither} (case insensitive)')}
 
-  time_inc <- process_output %>% ungroup() %>% distinct(time_increment) %>% pull()
+  time_inc <- process_output %>% ungroup() %>% filter(!is.na(time_increment)) %>%
+    distinct(time_increment) %>% pull()
 
   dat_to_plot <- process_output %>%
     mutate(filt_col = case_when(tolower(event_filter) == 'a' ~ 'Event A Only',
