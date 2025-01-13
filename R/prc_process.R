@@ -1,6 +1,15 @@
 
 #' Patient Record Consistency
 #'
+#' This is a concordance module that will assess consistency within a patient
+#' record by evaluating the presence or absence of two user-provided clinical
+#' events (`prc_event_file`). The checks in the module will establish whether
+#' one of, neither, or both events are present in each patient record and
+#' summarize these results across the full cohort. A sample version of the
+#' input file is accessible with `patientrecordconsistency::`. This function
+#' is compatible with both the OMOP and the PCORnet CDMs based on the user's
+#' selection.
+#'
 #' @param cohort cohort for SSDQA testing; required fields:
 #' - `site`
 #' - `person_id`
