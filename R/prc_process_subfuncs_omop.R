@@ -268,7 +268,8 @@ compute_prc_ntanom_omop <- function(cohort,
     grp <- facet_list[[i]] %>% distinct(facet_col) %>% pull()
 
     jaccards <- compute_jaccard(jaccard_input_tbl = facet_list[[i]],
-                                var_col = 'event_name') %>%
+                                var_col = 'event_name',
+                                omop_or_pcornet = 'omop') %>%
       mutate(grp = grp)
 
     jacc_list[[i]] <- jaccards

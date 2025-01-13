@@ -72,8 +72,8 @@ prc_process_pcornet <- function(cohort,
 
   # Prep cohort
 
-  cohort_prep <- prepare_cohort_pcnt(cohort_tbl = cohort_filter, age_groups = age_groups,
-                                     codeset = NULL) %>%
+  cohort_prep <- prepare_cohort(cohort_tbl = cohort_filter, age_groups = age_groups,
+                                codeset = NULL, omop_or_pcornet = 'pcornet') %>%
     group_by(!!! syms(grouped_list))
 
   if(!time){
