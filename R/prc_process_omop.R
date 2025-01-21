@@ -181,7 +181,7 @@ prc_process_omop <- function(cohort,
         summarise(stat_ct = n(),
                   prop_event = stat_ct / total_pts) %>% ungroup()
 
-      prc_tbl <- anomalize_ss_anom_at(fot_input_tbl = prc_expanded %>% distinct(),
+      prc_tbl <- anomalize_ss_anom_la(fot_input_tbl = prc_expanded %>% distinct(),
                                       grp_vars = 'stat_type',
                                       time_var = 'time_start',
                                       var_col = 'prop_event')
