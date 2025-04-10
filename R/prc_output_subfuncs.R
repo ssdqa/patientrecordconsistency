@@ -52,7 +52,7 @@ prc_ss_exp_cs <- function(process_output){
 
   g <- ggplot(stat_labs, aes(x = stat_type, y = prop_event, fill = stat_type)) +
     geom_col_interactive(aes(tooltip = tooltip), show.legend = FALSE) +
-    scale_fill_ssdqa() +
+    scale_fill_squba() +
     theme_minimal() +
     scale_y_continuous(sec.axis = sec_axis(~.*total_mult, name="Patient Count")) +
     labs(y = 'Proportion Patients',
@@ -107,7 +107,7 @@ prc_ms_exp_cs <- function(process_output){
   g <- ggplot(stat_labs, aes(y = site, x = prop_event, fill = site)) +
     geom_col_interactive(aes(tooltip = tooltip), show.legend = FALSE) +
     facet_wrap(~stat_type, ncol = 2) +
-    scale_fill_ssdqa() +
+    scale_fill_squba() +
     theme_minimal() +
     labs(y = 'Site',
          x = 'Proportion Patients',
@@ -161,7 +161,7 @@ prc_ss_exp_la <- function(process_output){
   g <- ggplot(stat_labs, aes(x = time_start, y = prop_event, color = stat_type,
                              group = stat_type, text = tooltip)) +
     geom_line() +
-    scale_color_ssdqa() +
+    scale_color_squba() +
     theme_minimal() +
     labs(y = 'Proportion Patients',
          x = '',
@@ -245,7 +245,7 @@ prc_ms_exp_la <- function(process_output,
     geom_hline(yintercept = 0, linetype = 'dotted',
                alpha = 0.5) +
     facet_wrap(~stat_type, ncol = 2) +
-    scale_color_ssdqa() +
+    scale_color_squba() +
     theme_minimal() +
     labs(y = 'Distance',
          x = '',
@@ -279,7 +279,7 @@ prc_ss_anom_cs <- function(process_output){
   grph <- ggplot(dat_to_plot, aes(x = fu_bin, y = jaccard_index, fill = fu_bin,
                                   tooltip = tooltip)) +
     geom_col_interactive(show.legend = FALSE) +
-    scale_fill_ssdqa() +
+    scale_fill_squba() +
     theme_minimal() +
     labs(x = 'Length of F/U',
          y = 'Jaccard Similarity Index',
@@ -333,7 +333,7 @@ prc_ms_anom_cs <- function(process_output){
       geom_point_interactive(aes(size=mean_val,shape=anomaly_yn, tooltip = text))+
       geom_point_interactive(data = dat_to_plot %>% filter(anomaly_yn == 'not outlier'),
                              aes(size=mean_val,shape=anomaly_yn, tooltip = text), shape = 1, color = 'black')+
-      scale_color_ssdqa(palette = 'diverging', discrete = FALSE) +
+      scale_color_squba(palette = 'diverging', discrete = FALSE) +
       scale_shape_manual(values=c(19,8))+
       scale_y_discrete(labels = label_wrap_gen()) +
       theme_minimal() +
@@ -370,7 +370,7 @@ prc_ms_anom_cs <- function(process_output){
                                    tooltip = text)) +
       geom_tile_interactive() +
       theme_minimal() +
-      scale_fill_ssdqa(discrete = FALSE, palette = 'diverging') +
+      scale_fill_squba(discrete = FALSE, palette = 'diverging') +
       labs(y = 'Years of F/U',
            x = 'Site',
            fill = 'Jaccard Index')
@@ -392,7 +392,7 @@ prc_ms_anom_cs <- function(process_output){
                                       tooltip = tooltip)) +
       geom_point_interactive(show.legend = FALSE) +
       theme_minimal() +
-      scale_color_ssdqa() +
+      scale_color_squba() +
       geom_hline(yintercept = 0, linetype = 'solid') +
       #geom_hline(yintercept = 1, linetype = 'dotted', color = 'gray', linewidth = 1) +
       #geom_hline(yintercept = -1, linetype = 'dotted', color = 'gray', linewidth = 1) +
@@ -471,11 +471,11 @@ prc_ss_anom_la <- function(process_output,
 
     new_pp <- ggplot(op_dat,aes(x,y)) +
       geom_ribbon(aes(ymin = lcl,ymax = ucl), fill = "lightgray",alpha = 0.4) +
-      geom_line(colour = ssdqa_colors_standard[[12]], size = .5) +
+      geom_line(colour = squba_colors_standard[[12]], size = .5) +
       geom_line(aes(x,cl)) +
-      geom_point(colour = ssdqa_colors_standard[[6]] , fill = ssdqa_colors_standard[[6]], size = 1) +
-      geom_point(data = subset(op_dat, y >= ucl), color = ssdqa_colors_standard[[3]], size = 2) +
-      geom_point(data = subset(op_dat, y <= lcl), color = ssdqa_colors_standard[[3]], size = 2) +
+      geom_point(colour = squba_colors_standard[[6]] , fill = squba_colors_standard[[6]], size = 1) +
+      geom_point(data = subset(op_dat, y >= ucl), color = squba_colors_standard[[3]], size = 2) +
+      geom_point(data = subset(op_dat, y <= lcl), color = squba_colors_standard[[3]], size = 2) +
       facet_wrap(~facet1, scales = 'free_y', ncol = 2) +
       ggtitle(label = paste0('Control Chart: Proportion of Patients with ', title)) +
       labs(x = 'Time',
@@ -575,7 +575,7 @@ prc_ms_anom_la <- function(process_output,
     geom_smooth(se=TRUE,alpha=0.1,linewidth=0.5, formula = y ~ x) +
     theme_minimal() +
     #theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1)) +
-    scale_color_ssdqa() +
+    scale_color_squba() +
     labs(y = 'Proportion (Loess)',
          x = 'Time',
          title = paste0('Smoothed Proportion of ', title, ' Across Time'))
@@ -587,7 +587,7 @@ prc_ms_anom_la <- function(process_output,
     geom_line(linewidth=0.2) +
     theme_minimal() +
     #theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1)) +
-    scale_color_ssdqa() +
+    scale_color_squba() +
     labs(x = 'Time',
          y = 'Proportion',
          title = paste0('Proportion of ', title, ' Across Time'))
@@ -606,7 +606,7 @@ prc_ms_anom_la <- function(process_output,
     coord_radial(r.axis.inside = FALSE, rotate.angle = TRUE) +
     guides(theta = guide_axis_theta(angle = 0)) +
     theme_minimal() +
-    scale_fill_ssdqa(palette = 'diverging', discrete = FALSE) +
+    scale_fill_squba(palette = 'diverging', discrete = FALSE) +
     # theme(legend.position = 'bottom',
     #       legend.text = element_text(angle = 45, vjust = 0.9, hjust = 1),
     #       axis.text.x = element_text(face = 'bold')) +

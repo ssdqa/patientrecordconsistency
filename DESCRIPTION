@@ -10,7 +10,7 @@ Authors@R:
              comment = c(ORCID = "0000-0001-9523-056X")),
       person("Charles", "Bailey", email = "baileyc@chop.edu", role = c("aut"),
              comment = c(ORCID = "0000-0002-8967-0662")))
-Description: The Patient Record Consistency module, part of the larger SSDQA ecosystem, tests the
+Description: The Patient Record Consistency module, part of the larger SQUBA ecosystem, tests the
     consistency of clinical data representation within a patient's record. The goal is to ensure that
     the patient's information is confirmatory and complete, such that two events that are expected to
     co-exist do both occur within the same patient (i.e. a leukemia diagnosis and chemotherapy).
@@ -35,8 +35,8 @@ Imports:
 Depends: 
     argos,
     R (>= 2.10),
-    ssdqa.gen
-Remotes: PEDSnet/argos, ssdqa/ssdqa.gen
+    squba.gen
+Remotes: PEDSnet/argos, ssdqa/squba.gen
 LazyData: true
 Suggests: 
     DBI,

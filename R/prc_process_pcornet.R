@@ -1,7 +1,7 @@
 
 #' Patient Record Consistency -- PCORnet
 #'
-#' @param cohort cohort for SSDQA testing; required fields:
+#' @param cohort cohort for SQUBA testing; required fields:
 #' - `site`
 #' - `person_id`
 #' - `start_date`

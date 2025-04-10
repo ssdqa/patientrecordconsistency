@@ -19,7 +19,7 @@ prc_process_pcornet(
 )
 }
 \arguments{
-\item{cohort}{cohort for SSDQA testing; required fields:
+\item{cohort}{cohort for SQUBA testing; required fields:
 \itemize{
 \item \code{site}
 \item \code{person_id}

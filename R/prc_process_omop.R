@@ -1,7 +1,7 @@
 
 #' Patient Record Consistency -- OMOP
 #'
-#' @param cohort cohort for SSDQA testing; required fields:
+#' @param cohort cohort for SQUBA testing; required fields:
 #' - `site`
 #' - `person_id`
 #' - `start_date`
@@ -43,7 +43,7 @@
 #'
 #'
 #' @import argos
-#' @import ssdqa.gen
+#' @import squba.gen
 #' @import dplyr
 #' @import cli
 #' @importFrom stringr str_wrap
