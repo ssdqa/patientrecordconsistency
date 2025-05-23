@@ -4,23 +4,15 @@
 \alias{prc_output}
 \title{Patient Record Consistency -- Output Generation}
 \usage{
-prc_output(
-  process_output,
-  output_function,
-  dist_from_stat = "mean",
-  event_filter = NULL
-)
+prc_output(process_output, dist_from_stat = "mean", event_filter = NULL)
 }
 \arguments{
-\item{process_output}{the summary output from \code{prc_process}}
+\item{process_output}{\emph{tabular input} | the summary output from \code{prc_process}}
 
-\item{output_function}{the name of the output function that should be executed; this is provided
-in a console message after \code{prc_process} finishes executing}
-
-\item{dist_from_stat}{the statistic from which distance should be measured for ms_exp_at
+\item{dist_from_stat}{\emph{string} | the statistic from which distance should be measured for ms_exp_at
 acceptable values are \code{mean} or \code{median}}
 
-\item{event_filter}{the event type of interest for the analysis for ss_anom_at or ms_anom_at;
+\item{event_filter}{\emph{string} | the event type of interest for the analysis for ss_anom_at or ms_anom_at;
 can be either \code{a}, \code{b}, \code{both}, or \code{neither}}
 }
 \value{
@@ -80,8 +72,7 @@ prc_process_example <- prc_process(cohort = cohort,
 prc_process_example
 
 #' Execute `prc_output` function
-prc_output_example <- prc_output(process_output = prc_process_example,
-                                 output_function = 'prc_ss_exp_cs')
+prc_output_example <- prc_output(process_output = prc_process_example)
 
 prc_output_example
 

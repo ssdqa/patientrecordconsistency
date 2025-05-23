@@ -44,8 +44,7 @@ prc_process_example <- prc_process(cohort = cohort,
 prc_process_example
 
 #' Execute `prc_output` function
-prc_output_example <- prc_output(process_output = prc_process_example,
-                                 output_function = 'prc_ss_exp_cs')
+prc_output_example <- prc_output(process_output = prc_process_example)
 
 prc_output_example
 

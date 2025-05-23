@@ -6,12 +6,10 @@
 #' be adjusted by the user after the graph has been output using `+ theme()`. Most graphs can
 #' also be made interactive using `make_interactive_squba()`
 #'
-#' @param process_output the summary output from `prc_process`
-#' @param output_function the name of the output function that should be executed; this is provided
-#'                        in a console message after `prc_process` finishes executing
-#' @param dist_from_stat the statistic from which distance should be measured for ms_exp_at
+#' @param process_output *tabular input* | the summary output from `prc_process`
+#' @param dist_from_stat *string* | the statistic from which distance should be measured for ms_exp_at
 #'                       acceptable values are `mean` or `median`
-#' @param event_filter the event type of interest for the analysis for ss_anom_at or ms_anom_at;
+#' @param event_filter *string* | the event type of interest for the analysis for ss_anom_at or ms_anom_at;
 #'                     can be either `a`, `b`, `both`, or `neither`
 #'
 #' @return a graph visualizing the output from `prc_process`; see individual functions for
@@ -22,9 +20,11 @@
 #' @export
 #'
 prc_output <- function(process_output,
-                       output_function,
                        dist_from_stat = 'mean',
                        event_filter = NULL){
+
+  # extract output function
+  output_function <- process_output %>% collect() %>% ungroup() %>% distinct(output_function) %>% pull()
 
 
   if(output_function == 'prc_ss_exp_cs'){

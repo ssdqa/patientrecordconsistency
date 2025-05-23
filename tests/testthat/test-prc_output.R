@@ -16,10 +16,12 @@ test_that('single site, exploratory, no time', {
                             event_a_name = c('t1', 't1', 't1', 't1', 't1', 't1', 't1', 't1', 't1'),
                             event_b_name = c('t1', 't1', 't1', 't1', 't1', 't1', 't1', 't1', 't1'),
                             pt_ct = c(4, 2, 7, 3, 100, 5, 2, 8, 6),
-                            total_pts = c(250, 250, 250, 250, 250, 250, 250, 250, 250))
+                            total_pts = c(250, 250, 250, 250, 250, 250, 250, 250, 250),
+                            output_function = c('prc_ss_exp_cs','prc_ss_exp_cs','prc_ss_exp_cs',
+                                                'prc_ss_exp_cs','prc_ss_exp_cs','prc_ss_exp_cs',
+                                                'prc_ss_exp_cs','prc_ss_exp_cs','prc_ss_exp_cs'))
 
-  expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ss_exp_cs'))
+  expect_no_error(prc_output(process_output = tbl_test))
 
 })
 
@@ -32,10 +34,12 @@ test_that('multi site, exploratory, no time', {
                             event_a_name = c('t1', 't1', 't1', 't1', 't1', 't1', 't1', 't1', 't1'),
                             event_b_name = c('t1', 't1', 't1', 't1', 't1', 't1', 't1', 't1', 't1'),
                             pt_ct = c(4, 2, 7, 3, 100, 5, 2, 8, 6),
-                            total_pts = c(250, 250, 250, 250, 250, 250, 250, 250, 250))
+                            total_pts = c(250, 250, 250, 250, 250, 250, 250, 250, 250),
+                            output_function = c('prc_ms_exp_cs','prc_ms_exp_cs','prc_ms_exp_cs',
+                                                'prc_ms_exp_cs','prc_ms_exp_cs','prc_ms_exp_cs',
+                                                'prc_ms_exp_cs','prc_ms_exp_cs','prc_ms_exp_cs'))
 
-  expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ms_exp_cs'))
+  expect_no_error(prc_output(process_output = tbl_test))
 
 })
 
@@ -52,10 +56,11 @@ test_that('single site, anomaly detection, no time', {
                             'concept_count_union' = c(4,5,6),
                             'jaccard_index' = c(0.1, 0.2, 0.3),
                             'concept1_prop' = c(0.1,0.2,0.3),
-                            'concept2_prop' = c(0.1,0.2,0.3))
+                            'concept2_prop' = c(0.1,0.2,0.3),
+                            output_function = c('prc_ss_anom_cs', 'prc_ss_anom_cs',
+                                                'prc_ss_anom_cs'))
 
-  expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ss_anom_cs'))
+  expect_no_error(prc_output(process_output = tbl_test))
 
 })
 
@@ -85,13 +90,13 @@ test_that('multi site, anomaly detection, no time', {
                             'analysis_eligible' = c('yes','yes','yes'),
                             'lower_tail' = c(0.8134, 0.8134, 0.8134),
                             'upper_tail' = c(0.932, 0.932, 0.932),
-                            'anomaly_yn' = c('no outlier', 'outlier', 'outlier'))
+                            'anomaly_yn' = c('no outlier', 'outlier', 'outlier'),
+                            output_function = c('prc_ms_anom_cs', 'prc_ms_anom_cs',
+                                                'prc_ms_anom_cs'))
 
-  expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ms_anom_cs'))
+  expect_no_error(prc_output(process_output = tbl_test))
 
-  expect_no_error(prc_output(process_output = tbl_test %>% dplyr::mutate(anomaly_yn = 'no outlier in group'),
-                             output_function = 'prc_ms_anom_cs'))
+  expect_no_error(prc_output(process_output = tbl_test %>% dplyr::mutate(anomaly_yn = 'no outlier in group')))
 
 })
 
@@ -113,10 +118,13 @@ test_that('single site, exploratory, across time', {
                             total_pts = c(100, 100, 100, 100, 100, 100,
                                           100, 100, 100, 100),
                             time_increment = c('year', 'year', 'year', 'year', 'year',
-                                               'year', 'year', 'year', 'year', 'year'))
+                                               'year', 'year', 'year', 'year', 'year'),
+                            output_function = c('prc_ss_exp_la','prc_ss_exp_la','prc_ss_exp_la',
+                                                'prc_ss_exp_la','prc_ss_exp_la','prc_ss_exp_la',
+                                                'prc_ss_exp_la','prc_ss_exp_la','prc_ss_exp_la',
+                                                'prc_ss_exp_la'))
 
-  expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ss_exp_la'))
+  expect_no_error(prc_output(process_output = tbl_test))
 
 })
 
@@ -137,10 +145,13 @@ test_that('multi site, exploratory, across time', {
                             total_pts = c(100, 100, 100, 100, 100, 100,
                                           100, 100, 100, 100),
                             time_increment = c('year', 'year', 'year', 'year', 'year',
-                                               'year', 'year', 'year', 'year', 'year'))
+                                               'year', 'year', 'year', 'year', 'year'),
+                            output_function = c('prc_ms_exp_la','prc_ms_exp_la','prc_ms_exp_la',
+                                                'prc_ms_exp_la','prc_ms_exp_la','prc_ms_exp_la',
+                                                'prc_ms_exp_la','prc_ms_exp_la','prc_ms_exp_la',
+                                                'prc_ms_exp_la'))
 
-  expect_no_error(prc_output(process_output = tbl_test,
-                             output_function = 'prc_ms_exp_la'))
+  expect_no_error(prc_output(process_output = tbl_test))
 
 })
 
@@ -165,11 +176,14 @@ test_that('single site, anomaly detection, across time -- year', {
                                           'Neither Event', 'Neither Event', 'Neither Event',
                                           'Both Events'),
                             time_increment = c('year', 'year', 'year', 'year', 'year',
-                                               'year', 'year', 'year', 'year', 'year'))
+                                               'year', 'year', 'year', 'year', 'year'),
+                            output_function = c('prc_ss_anom_la','prc_ss_anom_la','prc_ss_anom_la',
+                                                'prc_ss_anom_la','prc_ss_anom_la','prc_ss_anom_la',
+                                                'prc_ss_anom_la','prc_ss_anom_la','prc_ss_anom_la',
+                                                'prc_ss_anom_la'))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             event_filter = 'a',
-                             output_function = 'prc_ss_anom_la'))
+                             event_filter = 'a'))
 
 })
 
@@ -210,11 +224,14 @@ test_that('single site, anomaly detection, across time -- month', {
                             'recomposed_l2' = c(0.84, 0.8, 0.8, 0.89, 0.86,
                                                 0.84, 0.8, 0.8, 0.89, 0.86),
                             'observed_clean' = c(0.46, 0.57, 0.69, 0.82, 0.88,
-                                                 0.46, 0.57, 0.69, 0.82, 0.88))
+                                                 0.46, 0.57, 0.69, 0.82, 0.88),
+                            output_function = c('prc_ss_anom_la','prc_ss_anom_la','prc_ss_anom_la',
+                                                'prc_ss_anom_la','prc_ss_anom_la','prc_ss_anom_la',
+                                                'prc_ss_anom_la','prc_ss_anom_la','prc_ss_anom_la',
+                                                'prc_ss_anom_la'))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             event_filter = 'a',
-                             output_function = 'prc_ss_anom_la'))
+                             event_filter = 'a'))
 
 })
 
@@ -241,10 +258,12 @@ test_that('multi site, anomaly detection, across time', {
                             'median' = c(0.87, 0.87, 0.87, 0.87, 0.87, 0.87, 0.87, 0.87, 0.87),
                             'date_numeric' = c(17000, 17000, 17000, 17000, 17000, 17000, 17000, 17000, 17000),
                             'site_loess' = c(0.84, 0.87, 0.89, 0.91, 0.89, 0.73, 0.81, 0.83, 0.94),
-                            'dist_eucl_mean' = c(0.84,0.84,0.84,0.84,0.84,0.9,0.9,0.9,0.9))
+                            'dist_eucl_mean' = c(0.84,0.84,0.84,0.84,0.84,0.9,0.9,0.9,0.9),
+                            output_function = c('prc_ms_anom_la','prc_ms_anom_la','prc_ms_anom_la',
+                                                'prc_ms_anom_la','prc_ms_anom_la','prc_ms_anom_la',
+                                                'prc_ms_anom_la','prc_ms_anom_la','prc_ms_anom_la'))
 
   expect_no_error(prc_output(process_output = tbl_test,
-                             event_filter = 'both',
-                             output_function = 'prc_ms_anom_la'))
+                             event_filter = 'both'))
 
 })
