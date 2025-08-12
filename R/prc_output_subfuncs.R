@@ -167,9 +167,10 @@ prc_ms_exp_cs <- function(process_output,
       geom_col_interactive(aes(tooltip = tooltip), fill = 'gray', show.legend = FALSE) +
       geom_errorbar(aes(y=site, x=prop_event, xmin=allsite_q1, xmax=allsite_q3)) +
       geom_point(aes(y = site, x = allsite_median)) +
-      geom_point(data = stat_labs %>% filter(site %in% large_n_sites),
-                 aes(x = prop_event, y = 'all sites', color = site), shape = 8,
-                 size = 3) +
+      geom_point_interactive(data = stat_labs %>% filter(site %in% large_n_sites),
+                             aes(x = prop_event, y = 'all sites', color = site,
+                                 tooltip = paste0('Site: ', site, '\nProp.: ', round(prop_event, 3))),
+                             shape = 8,size = 3) +
       facet_wrap(~stat_type, ncol = 2) +
       scale_color_squba() +
       theme_minimal() +
@@ -793,9 +794,9 @@ prc_ms_anom_la <- function(process_output,
     rename(prop_col=mean_allsiteprop) %>%
     mutate(site='all site average') %>%
     mutate(text_smooth=paste0("Site: ", site,
-                              "\n","Proportion: ",prop_col),
+                              "\n","Proportion: ",round(prop_col,3)),
            text_raw=paste0("Site: ", site,
-                           "\n","Proportion: ",prop_col))
+                           "\n","Proportion: ",round(prop_col,3)))
 
   iqr_dat <- filt_op %>%
     select(time_start,stat_type,prop_col) %>% distinct() %>%
@@ -809,7 +810,7 @@ prc_ms_anom_la <- function(process_output,
     mutate(text_smooth=paste0("Site: ", site,
                               "\n","Euclidean Distance from All-Site Mean: ",dist_eucl_mean),
            text_raw=paste0("Site: ", site,
-                           "\n","Site Proportion: ",prop_col,
+                           "\n","Site Proportion: ",round(prop_col,3),
                            "\n","Site Smoothed Proportion: ",site_loess,
                            "\n","Euclidean Distance from All-Site Mean: ",dist_eucl_mean))
 
@@ -819,7 +820,6 @@ prc_ms_anom_la <- function(process_output,
       geom_line(data=allsites, linewidth=1.1) +
       geom_smooth(se=TRUE,alpha=0.1,linewidth=0.5, formula = y ~ x) +
       theme_minimal() +
-      #theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1)) +
       scale_color_squba() +
       labs(y = 'Proportion (Loess)',
            x = 'Time',
@@ -831,7 +831,6 @@ prc_ms_anom_la <- function(process_output,
       geom_line(data=allsites,linewidth=1.1) +
       geom_line(linewidth=0.2) +
       theme_minimal() +
-      #theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1)) +
       scale_color_squba() +
       labs(x = 'Time',
            y = 'Proportion',
@@ -846,15 +845,10 @@ prc_ms_anom_la <- function(process_output,
                               '\nAverage Loess Proportion: ', mean_site_loess)) %>%
       ggplot(aes(x = site, y = dist_eucl_mean, fill = mean_site_loess, tooltip = tooltip)) +
       geom_col_interactive() +
-      # geom_text(aes(label = dist_eucl_mean), vjust = 2, size = 3,
-      #           show.legend = FALSE) +
       coord_radial(r.axis.inside = FALSE, rotate.angle = TRUE) +
       guides(theta = guide_axis_theta(angle = 0)) +
       theme_minimal() +
       scale_fill_squba(palette = 'diverging', discrete = FALSE) +
-      # theme(legend.position = 'bottom',
-      #       legend.text = element_text(angle = 45, vjust = 0.9, hjust = 1),
-      #       axis.text.x = element_text(face = 'bold')) +
       labs(fill = 'Avg. Proportion \n(Loess)',
            y ='Euclidean Distance',
            x = '',
@@ -875,10 +869,8 @@ prc_ms_anom_la <- function(process_output,
   }else{
     q <- ggplot(allsites, aes(x = time_start)) +
       geom_ribbon(data = iqr_dat, aes(ymin = q1, ymax = q3), alpha = 0.2) +
-      geom_line(aes(y = prop_col, color = site, group = site, text=text_raw), linewidth=1.1) +
-      geom_line(data = dat_to_plot %>% filter(site %in% large_n_sites),
-                aes(y = prop_col, color = site, group = site, text=text_raw),
-                linewidth=0.2) +
+      geom_line(aes(y = prop_col, color = site, group = site), linewidth=1.1) +
+      geom_point_interactive(aes(y = prop_col, color = site, group = site, tooltip=text_raw)) +
       theme_minimal() +
       #theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1)) +
       scale_color_squba() +
@@ -893,8 +885,8 @@ prc_ms_anom_la <- function(process_output,
         distinct(stat_type, dist_eucl_mean) %>%
         ggplot(aes(x = dist_eucl_mean, y = stat_type)) +
         geom_boxplot() +
-        geom_point(color = 'gray',
-                   alpha = 0.75) +
+        geom_point_interactive(color = 'gray',
+                               alpha = 0.75, aes(tooltip = dist_eucl_mean)) +
         theme_minimal() +
         theme(axis.text.y = element_blank(),
               legend.title = element_blank()) +
@@ -904,12 +896,19 @@ prc_ms_anom_la <- function(process_output,
              title = paste0('Distribution of Euclidean Distances'))
 
     }else{
+
+      q <- q + geom_line(data = dat_to_plot %>% filter(site %in% large_n_sites),
+                         aes(y = prop_col, color = site, group = site),
+                         linewidth=0.2) +
+        geom_point_interactive(data = dat_to_plot %>% filter(site %in% large_n_sites),
+                               aes(y = prop_col, color = site, group = site, tooltip=text_raw))
+
       t <- dat_to_plot %>%
         distinct(stat_type,dist_eucl_mean) %>%
         ggplot(aes(x = dist_eucl_mean, y = stat_type)) +
         geom_boxplot() +
-        geom_point(data = dat_to_plot %>% filter(site %in% large_n_sites),
-                   aes(color = site)) +
+        geom_point_interactive(data = dat_to_plot %>% filter(site %in% large_n_sites),
+                               aes(color = site, tooltip = dist_eucl_mean)) +
         theme_minimal() +
         theme(axis.text.y = element_blank(),
               legend.title = element_blank()) +
@@ -919,6 +918,11 @@ prc_ms_anom_la <- function(process_output,
              y = '',
              title = paste0('Distribution of Euclidean Distances'))
     }
+
+    q[['metadata']] <- tibble('pkg_backend' = 'ggiraph',
+                              'tooltip' = TRUE)
+    t[['metadata']] <- tibble('pkg_backend' = 'ggiraph',
+                              'tooltip' = TRUE)
 
     output <- q + t + plot_layout(ncol = 1, heights = c(5, 1))
   }
