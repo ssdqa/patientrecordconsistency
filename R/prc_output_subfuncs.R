@@ -844,7 +844,8 @@ prc_ms_anom_la <- function(process_output,
                               '\nEuclidean Distance: ', dist_eucl_mean,
                               '\nAverage Loess Proportion: ', mean_site_loess)) %>%
       ggplot(aes(x = site, y = dist_eucl_mean, fill = mean_site_loess, tooltip = tooltip)) +
-      geom_col_interactive() +
+      geom_segment(aes(x = site, xend = site, y = 0, yend = dist_eucl_mean), color = 'navy') +
+      geom_point_interactive(aes(fill = mean_site_loess), shape = 21, size = 4) +
       coord_radial(r.axis.inside = FALSE, rotate.angle = TRUE) +
       guides(theta = guide_axis_theta(angle = 0)) +
       theme_minimal() +
