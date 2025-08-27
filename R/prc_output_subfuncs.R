@@ -170,7 +170,7 @@ prc_ms_exp_cs <- function(process_output,
       geom_point_interactive(data = stat_labs %>% filter(site %in% large_n_sites),
                              aes(x = prop_event, y = 'all sites', color = site,
                                  tooltip = paste0('Site: ', site, '\nProp.: ', round(prop_event, 3))),
-                             shape = 8,size = 3) +
+                             shape = 8,size = 4) +
       facet_wrap(~stat_type, ncol = 2) +
       scale_color_squba() +
       theme_minimal() +
@@ -178,7 +178,8 @@ prc_ms_exp_cs <- function(process_output,
              fill = 'none') +
       labs(y = 'Site',
            x = 'Proportion Patients',
-           title = 'Proportion Patients with Each Event')
+           title = 'Proportion Patients with Each Event') +
+      coord_flip()
   }
 
   g[["metadata"]] <- tibble('pkg_backend' = 'ggiraph',
