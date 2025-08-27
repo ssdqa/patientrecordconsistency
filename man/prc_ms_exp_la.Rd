@@ -4,13 +4,23 @@
 \alias{prc_ms_exp_la}
 \title{\emph{Multi Site, Exploratory, Longitudinal}}
 \usage{
-prc_ms_exp_la(process_output, dist_from_stat = "mean")
+prc_ms_exp_la(
+  process_output,
+  dist_from_stat = "mean",
+  large_n = FALSE,
+  large_n_sites = NULL
+)
 }
 \arguments{
 \item{process_output}{the output from \code{prc_process}}
 
 \item{dist_from_stat}{the statistic from which distance should be measured
 acceptable values are \code{mean} or \code{median}}
+
+\item{large_n}{a boolean indicating whether the large N visualization, intended for a high
+volume of sites, should be used; defaults to FALSE}
+
+\item{large_n_sites}{a vector of site names that can optionally generate a filtered visualization}
 }
 \value{
 a line graph displaying the distance from the overall mean or median

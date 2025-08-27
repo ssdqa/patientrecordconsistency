@@ -4,7 +4,13 @@
 \alias{prc_output}
 \title{Patient Record Consistency -- Output Generation}
 \usage{
-prc_output(process_output, dist_from_stat = "mean", event_filter = NULL)
+prc_output(
+  process_output,
+  dist_from_stat = "mean",
+  event_filter = NULL,
+  large_n = FALSE,
+  large_n_sites = NULL
+)
 }
 \arguments{
 \item{process_output}{\emph{tabular input} | the summary output from \code{prc_process}}
@@ -14,6 +20,11 @@ acceptable values are \code{mean} or \code{median}}
 
 \item{event_filter}{\emph{string} | the event type of interest for the analysis for ss_anom_at or ms_anom_at;
 can be either \code{a}, \code{b}, \code{both}, or \code{neither}}
+
+\item{large_n}{\emph{boolean} | for multi site analyses, a boolean indicating whether the large N visualization, intended for a high
+volume of sites, should be used; defaults to FALSE}
+
+\item{large_n_sites}{\emph{vector} | when large_n is TRUE, a vector of site names that can optionally generate a filtered visualization}
 }
 \value{
 a graph visualizing the output from \code{prc_process}; see individual functions for

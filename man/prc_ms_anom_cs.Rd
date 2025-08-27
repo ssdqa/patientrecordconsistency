@@ -4,10 +4,15 @@
 \alias{prc_ms_anom_cs}
 \title{\emph{Multi Site, Anomaly Detection, Cross-Sectional}}
 \usage{
-prc_ms_anom_cs(process_output)
+prc_ms_anom_cs(process_output, large_n = FALSE, large_n_sites = NULL)
 }
 \arguments{
 \item{process_output}{the output from \code{prc_process}}
+
+\item{large_n}{a boolean indicating whether the large N visualization, intended for a high
+volume of sites, should be used; defaults to FALSE}
+
+\item{large_n_sites}{a vector of site names that can optionally generate a filtered visualization}
 }
 \value{
 a dot plot where the shape of the dot represents whether the point is
