@@ -6,17 +6,46 @@
 #' be adjusted by the user after the graph has been output using `+ theme()`. Most graphs can
 #' also be made interactive using `make_interactive_squba()`
 #'
-#' @param process_output *tabular input* | the summary output from `prc_process`
-#' @param dist_from_stat *string* | the statistic from which distance should be measured for ms_exp_at
-#'                       acceptable values are `mean` or `median`
-#' @param event_filter *string* | the event type of interest for the analysis for ss_anom_at or ms_anom_at;
-#'                     can be either `a`, `b`, `both`, or `neither`
-#' @param large_n *boolean* | for multi site analyses, a boolean indicating whether the large N visualization, intended for a high
-#'                volume of sites, should be used; defaults to FALSE
-#' @param large_n_sites *vector* | when large_n is TRUE, a vector of site names that can optionally generate a filtered visualization
+#' @param process_output *tabular input* || **required**
 #'
-#' @return a graph visualizing the output from `prc_process`; see individual functions for
-#'         more specific details
+#'   The tabular output produced by `pes_process`
+#'
+#'   Note any patient-level results generated are not intended to be used with this function.
+#'
+#' @param dist_from_stat *string* || defaults to `mean`
+#'
+#'   A string indicating the statistic from which distance should be measured for the
+#'   `Multi-Site, Exploratory, Longitudinal` check
+#'
+#'   Acceptable values are `mean` or `median`
+#'
+#' @param event_filter *string* || defaults to `NULL`
+#'
+#'   A string indicating the event co-occurrence type of interest for the analysis.
+#'   This parameter is required for the following checks:
+#'   - `Single Site, Anomaly Detection, Longitudinal`
+#'   - `Multi-Site, Anomaly Detection, Longitudinal`
+#'
+#'   Acceptable values are `a`, `b`, `both`, or `neither`
+#'
+#' @param large_n *boolean* || defaults to `FALSE`
+#'
+#'   For Multi-Site analyses, a boolean indicating whether the large N
+#'   visualization, intended for a high volume of sites, should be used. This
+#'   visualization will produce high level summaries across all sites, with an
+#'   option to add specific site comparators via the `large_n_sites` parameter.
+#'
+#' @param large_n_sites *vector* || defaults to `NULL`
+#'
+#'   When `large_n = TRUE`, a vector of site names that can add site-level information
+#'   to the plot for comparison across the high level summary information
+#'
+#' @return This function will produce a graph to visualize the results
+#'         from `prc_process` based on the parameters provided. The default
+#'         output is typically a static ggplot or gt object, but interactive
+#'         elements can be activated by passing the plot through `make_interactive_squba`.
+#'         For a more detailed description of output specific to each check type,
+#'         see the PEDSpace metadata repository
 #'
 #' @example inst/example-prc_process_output.R
 #'

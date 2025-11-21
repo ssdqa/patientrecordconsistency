@@ -29,3 +29,4 @@ proportion of patients for each site and event type
 \description{
 \emph{Multi Site, Exploratory, Longitudinal}
 }
+\keyword{internal}

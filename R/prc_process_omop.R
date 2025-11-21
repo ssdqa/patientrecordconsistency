@@ -49,6 +49,8 @@
 #' @importFrom stringr str_wrap
 #' @importFrom tidyr separate_wider_delim
 #'
+#' @keywords internal
+#'
 prc_process_omop <- function(cohort,
                              prc_event_file,
                              multi_or_single_site = 'single',
@@ -154,7 +156,7 @@ prc_process_omop <- function(cohort,
                              })
 
       if(patient_level_tbl){
-        prc_pt_lv <- compute_fot(cohort = cohort_prep,
+        prc_ptlv <- compute_fot(cohort = cohort_prep,
                                     site_col = site_col,
                                     reduce_id = NULL,
                                     time_period = time_period,

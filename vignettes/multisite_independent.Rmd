@@ -1,0 +1,123 @@
+---
+title: "Multi-Site Analysis for Independent Data Sources"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multi-Site Analysis for Independent Data Sources}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The multi-site analyses included in this suite are intended to be executed against data that are all stored in the same place. However, there may be some instances where the data associated with each site is stored in independent locations. This vignette outlines how the multi-site analysis can be executed in these instances.
+
+After following the instructions to reproduce the analysis, you will also need to change the `output_function` column to tell the `prc_output` function which check you executed. Reference the table below for the labels that are associated with each check:
+
+```{r, echo=FALSE, message=FALSE}
+library(dplyr)
+
+dplyr::tibble('Check Type' = c('Multi Site, Exploratory, Cross-Sectional',
+                               'Multi Site, Exploratory, Longitudinal',
+                               'Multi Site, Anomaly Detection, Cross-Sectional',
+                               'Multi Site, Anomaly Detection, Longitudinal'),
+              'output_function' = c('prc_ms_exp_cs',
+                                    'prc_ms_exp_la',
+                                    'prc_ms_anom_cs',
+                                    'prc_ms_anom_la')) %>%
+  knitr::kable()
+
+```
+
+## Multi-Site Exploratory Analysis
+
+The process for the exploratory analysis is the same for both the cross-sectional and longitudinal configurations.
+
+First, execute either of the **Single Site, Exploratory** analyses, configured appropriately for your study, against each data source.
+
+```{r setup, eval=FALSE}
+library(patientrecordconsistency)
+
+my_table <- prc_process(cohort = my_cohort,
+                        multi_or_single_site = 'single',
+                        anomaly_or_exploratory = 'exploratory',
+                        time = T / F,
+                        ...)
+```
+
+Then, combine these results into a single table with the different sites delineated in the `site` column.
+
+```{r, eval=FALSE}
+my_final_results <- my_table1 %>% dplyr::union(my_table2) ... %>%
+  dplyr::union(my_table_n) %>%
+  dplyr::mutate(output_function = '{see table above}')
+
+```
+
+## Multi-Site Anomaly Detection Analysis
+
+### Cross-Sectional
+
+First, execute the **Single Site, *Anomaly Detection*, Cross-Sectional** analysis, configured appropriately for your study, against each data source. 
+
+```{r, eval=FALSE}
+library(patientrecordconsistency)
+
+my_table <- prc_process(cohort = my_cohort,
+                        multi_or_single_site = 'single',
+                        anomaly_or_exploratory = 'anomaly',
+                        time = F,
+                        ...)
+```
+
+Then, combine these results into a single table with the different sites delineated in the `site` column.
+
+```{r, eval=FALSE}
+my_final_results <- my_table1 %>% dplyr::union(my_table2) ... %>%
+  dplyr::union(my_table_n)
+```
+
+Finally, use this combined table as input to the `compute_dist_anomalies` and `detect_outliers` functions, both available through the `squba.gen` package. The `p_value` can be selected by the user.
+
+```{r, eval=FALSE}
+# First, execute the compute_dist_anomalies function
+df_start <- compute_dist_anomalies(df_tbl = my_table,
+                                   grp_vars = c('fu_bin'),
+                                   var_col = 'jaccard_index',
+                                   denom_cols = c('fu_bin'))
+
+# Finally, use that output as input for the detect_outliers function
+df_final <- detect_outliers(df_tbl = df_start,
+                            tail_input = 'both',
+                            p_input = p_value,
+                            column_analysis = 'jaccard_index',
+                            column_variable = 'fu_bin') %>%
+  dplyr::mutate(output_function = '{see table above}')
+```
+
+### Longitudinal
+
+Start by executing the same steps as the exploratory analysis. Then, apply some additional formatting (below) to the final combined table and pass it into the `ms_anom_euclidean` function, available through the `squba.gen` package.
+
+```{r, eval=FALSE}
+## Additional formatting for the table
+event_categorization <- prc_tbl %>%
+  uncount(pt_ct) %>%
+  mutate(stat_type = case_when(event_a_num == 0 & event_b_num == 0 ~ 'Neither Event',
+                               event_a_num == 0 & event_b_num != 0 ~ 'Event B Only',
+                               event_a_num != 0 & event_b_num == 0 ~ 'Event A Only',
+                               event_a_num != 0 & event_b_num != 0 ~ 'Both Events')) %>%
+  group_by(site, time_start, time_increment, 
+           event_a_name, event_b_name, total_pts, stat_type) %>%
+  summarise(stat_ct = n(),
+            prop_event = stat_ct / total_pts) %>% ungroup()
+
+## Apply Euclidean distance computation
+df <- ms_anom_euclidean(fot_input_tbl = event_categorization,
+                        grp_vars = c('site', 'stat_type'),
+                        var_col = 'prop_event')
+```

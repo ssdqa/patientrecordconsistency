@@ -23,6 +23,8 @@ NULL
 #'         patients who have only event a, only event b, both events, or neither event present
 #'         in their record
 #'
+#' @keywords internal
+#'
 prc_ss_exp_cs <- function(process_output){
 
   expand_cts <- process_output %>%
@@ -79,6 +81,8 @@ prc_ss_exp_cs <- function(process_output){
 #' @return a bar graph displaying the proportion of patients at each site with
 #'         only event a, only event b, both events, or neither event present in
 #'         their record
+#'
+#' @keywords internal
 #'
 prc_ms_exp_cs <- function(process_output,
                           large_n = FALSE,
@@ -197,6 +201,8 @@ prc_ms_exp_cs <- function(process_output,
 #' @return a line graph the displaying the proportion of patients with only event a,
 #'         only event b, both events, or neither event across time
 #'
+#' @keywords internal
+#'
 prc_ss_exp_la <- function(process_output){
 
   expand_cts <- process_output %>%
@@ -256,6 +262,8 @@ prc_ss_exp_la <- function(process_output){
 #'
 #' @return a line graph displaying the distance from the overall mean or median
 #'         proportion of patients for each site and event type
+#'
+#' @keywords internal
 #'
 prc_ms_exp_la <- function(process_output,
                           dist_from_stat = 'mean',
@@ -379,6 +387,8 @@ prc_ms_exp_la <- function(process_output,
 #' @return a bar graph displaying the jaccard similarity index for the two events
 #'         within each user defined follow up window
 #'
+#' @keywords internal
+#'
 prc_ss_anom_cs <- function(process_output){
 
 
@@ -420,6 +430,8 @@ prc_ss_anom_cs <- function(process_output){
 #'         if there were no groups eligible for analysis, a heat map showing the jaccard index
 #'         and a dot plot showing each site's average standard deviation away from the mean
 #'         index is returned instead
+#'
+#' @keywords internal
 #'
 prc_ms_anom_cs <- function(process_output,
                            large_n = FALSE,
@@ -665,6 +677,8 @@ prc_ms_anom_cs <- function(process_output,
 #'         conducted and outliers are marked with red dots. the graphs representing
 #'         the data removed in the regression are also returned
 #'
+#' @keywords internal
+#'
 prc_ss_anom_la <- function(process_output,
                            event_filter,
                            facet = NULL){
@@ -767,6 +781,8 @@ prc_ss_anom_la <- function(process_output,
 #'    across time computation with the Euclidean distance associated with each line
 #'    3) a bar graph with the Euclidean distance value for each site, with the average
 #'    proportion as the fill
+#'
+#' @keywords internal
 #'
 prc_ms_anom_la <- function(process_output,
                            event_filter,

@@ -41,6 +41,8 @@
 #'
 #' @return a dataframe summarizing how often two events occur and co-occur within a patient record
 #'
+#' @keywords internal
+#'
 prc_process_pcornet <- function(cohort,
                                 prc_event_file,
                                 multi_or_single_site = 'single',

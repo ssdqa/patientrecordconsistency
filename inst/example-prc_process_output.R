@@ -7,11 +7,10 @@ conn <- mk_testdb_omop()
 
 #' Establish connection to database and generate internal configurations
 initialize_dq_session(session_name = 'prc_process_test',
-                      working_directory = getwd(),
+                      working_directory = my_directory,
                       db_conn = conn,
                       is_json = FALSE,
-                      file_subdirectory = system.file('extdata',
-                                        package = 'patientrecordconsistency'),
+                      file_subdirectory = my_file_folder,
                       cdm_schema = NA)
 
 #' Build mock study cohort
@@ -39,7 +38,8 @@ prc_process_example <- prc_process(cohort = cohort,
                                    anomaly_or_exploratory = 'exploratory',
                                    time = FALSE,
                                    omop_or_pcornet = 'omop',
-                                   prc_event_file = prc_events)
+                                   prc_event_file = prc_events) %>%
+  suppressMessages()
 
 prc_process_example
 

@@ -16,3 +16,4 @@ only event b, both events, or neither event across time
 \description{
 \emph{Single Site, Exploratory, Longitudinal}
 }
+\keyword{internal}

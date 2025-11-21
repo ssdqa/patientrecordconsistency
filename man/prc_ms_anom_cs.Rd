@@ -24,10 +24,11 @@ across all sites
     and a dot plot showing each site's average standard deviation away from the mean
     index is returned instead
 }\if{html}{\out{</div>}}
-
-SD: ', round(sd_val,2),
-SD: ', round(sd_val,2),
 }
 \description{
 \emph{Multi Site, Anomaly Detection, Cross-Sectional}
 }
+\keyword{',}
+\keyword{SD:}
+\keyword{internal}
+\keyword{round(sd_val,2),}

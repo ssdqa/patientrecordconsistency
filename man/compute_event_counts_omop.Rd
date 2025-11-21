@@ -41,3 +41,4 @@ have both events, or have neither event within their patient record
 \description{
 Compute the counts of each event within the patient record and across the cohort
 }
+\keyword{internal}

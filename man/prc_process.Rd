@@ -20,69 +20,107 @@ prc_process(
 )
 }
 \arguments{
-\item{cohort}{\emph{tabular input} | cohort for SQUBA testing; required fields:
-\itemize{
-\item \code{site} | \emph{character}
-\item \code{person_id} / \code{patid} | \emph{integer} / \emph{character}
-\item \code{start_date} | \emph{date}
-\item \code{end_date} | \emph{date}
-}}
+\item{cohort}{\emph{tabular input} || \strong{required}
 
-\item{prc_event_file}{\emph{tabular input} | a table with the definitions for each event with the columns
+The cohort to be used for data quality testing. This table should contain,
+at minimum:
 \itemize{
-\item \code{event} | \emph{character} | A or B
+\item \code{site} | \emph{character} | the name(s) of institutions included in your cohort
+\item \code{person_id} / \code{patid} | \emph{integer} / \emph{character} | the patient identifier
+\item \code{start_date} | \emph{date} | the start of the cohort period
+\item \code{end_date} | \emph{date} | the end of the cohort period
+}
+
+Note that the start and end dates included in this table will be used to
+limit the search window for the analyses in this module.}
+
+\item{prc_event_file}{\emph{tabular input} || \strong{required}
+
+A table with the definitions of each of the events. This table should
+contain two rows, one for each event, with the following columns:
+\itemize{
+\item \code{event} | \emph{character} | a string, either A or B, representing the event type. A will be treated as the event that is expected to occur first in a sequence
 \item \code{event_label} | \emph{character} | a descriptive label for the event
-\item \code{domain_tbl} | \emph{character} | the default CDM table from which data is retrieved
-\item \code{concept_field} | \emph{character} | the field in the table where the codes of interest are stored
-\item \code{date_field} | \emph{character} | the date field to be used to establish the index & occurrence dates
-\item \code{vocabulary_field} | \emph{character} | (PCORnet only) The name of the column in the domain table where the vocabulary type is stored
-\item \code{codeset_name} | \emph{character} | the name of the codeset in the specs directory to define the variable of interest
-\item \code{filter_logic} | \emph{character} | a string indicating any filter logic that should be applied to establish the event
-ex: an Hba1c > 6.5
-}}
+\item \code{domain_tbl} | \emph{character} | the name of the CDM table where the event is defined
+\item \code{concept_field} | \emph{character} | the string name of the field in the domain table where the concepts are located
+\item \code{date_field} | \emph{character} | the name of the field in the domain table with the date that should be used for temporal filtering
+\item \code{vocabulary_field} | \emph{character} | for PCORnet applications, the name of the field in the domain table with a vocabulary identifier to differentiate concepts from one another (ex: dx_type); can be set to NA for OMOP applications
+\item \code{codeset_name} | \emph{character} | the name of the codeset that defines the event of interest
+\item \code{filter_logic} | \emph{character} | logic to be applied to the domain_tbl in order to achieve the definition of interest; should be written as if you were applying it in a dplyr::filter command in R
+}
 
-\item{omop_or_pcornet}{\emph{string} | Option to run the function using the OMOP or PCORnet CDM as the default CDM
+To see an example of this input, see \code{?patientrecordconsistency::prc_event_file}}
+
+\item{omop_or_pcornet}{\emph{string} || \strong{required}
+
+A string, either \code{omop} or \code{pcornet}, indicating the CDM format of the data
 \itemize{
 \item \code{omop}: run the \code{\link[=prc_process_omop]{prc_process_omop()}} function against an OMOP CDM instance
 \item \code{pcornet}: run the \code{\link[=prc_process_pcornet]{prc_process_pcornet()}} function against a PCORnet CDM instance
 }}
 
-\item{multi_or_single_site}{\emph{string} | Option to run the function on a single vs multiple sites
-\itemize{
-\item \code{single} - run the function for a single site
-\item \code{multi} - run the function for multiple sites
-}}
+\item{multi_or_single_site}{\emph{string} || defaults to \code{single}
 
-\item{anomaly_or_exploratory}{\emph{string} | Option to conduct an exploratory or anomaly detection analysis. Exploratory analyses give a high
-level summary of the data to examine the fact representation within the cohort. Anomaly detection
-analyses are specialized to identify outliers within the cohort.}
+A string, either \code{single} or \code{multi}, indicating whether a single-site or
+multi-site analysis should be executed}
 
-\item{age_groups}{\emph{tabular input} | If you would like to stratify the results by age group,  create a table or CSV file with the following
-columns and include it as the \code{age_groups} function parameter:
+\item{anomaly_or_exploratory}{\emph{string} || defaults to \code{exploratory}
+
+A string, either \code{anomaly} or \code{exploratory}, indicating what type of results
+should be produced.
+
+Exploratory analyses give a high level summary of the data to examine the
+fact representation within the cohort. Anomaly detection analyses are
+specialized to identify outliers within the cohort.}
+
+\item{age_groups}{\emph{tabular input} || defaults to \code{NULL}
+
+If you would like to stratify the results by age group, create a table or
+CSV file with the following columns and use it as input to this parameter:
 \itemize{
 \item \code{min_age} | \emph{integer} | the minimum age for the group (i.e. 10)
 \item \code{max_age} | \emph{integer} | the maximum age for the group (i.e. 20)
 \item \code{group} | \emph{character} | a string label for the group (i.e. 10-20, Young Adult, etc.)
 }
 
-If you would \emph{not} like to stratify by age group, leave the argument as NULL}
+If you would \emph{not} like to stratify by age group, leave as \code{NULL}}
 
-\item{patient_level_tbl}{\emph{boolean} | logical controlling whether patient level output is returned or not}
+\item{patient_level_tbl}{\emph{boolean} || defaults to \code{FALSE}
 
-\item{fu_breaks}{\emph{vector} | a numeric vector that defines how to group different windows of follow up time}
+A boolean indicating whether an additional table with patient level results should be output.
 
-\item{p_value}{\emph{numeric} | the p value to be used as a threshold in the multi-site anomaly detection analysis}
+If \code{TRUE}, the output of this function will be a list containing both the summary and patient level
+output. Otherwise, this function will just output the summary dataframe}
 
-\item{time}{\emph{boolean} | a logical that tells the function whether you would like to look at the output over time}
+\item{fu_breaks}{\emph{vector} || defaults to \code{c(0, 1, 3, 8, 11, 15, 25, 50, 100)}
 
-\item{time_span}{\emph{vector - length 2} | when time = TRUE, this argument defines the start and end dates for the time period of interest. should be
-formatted as c(start date, end date) in yyyy-mm-dd date format}
+A numeric vector that defines how to group different windows of follow up time. This
+parameter is used for both \verb{Anomaly Detection, Cross-Sectional} checks}
 
-\item{time_period}{\emph{string} | when time = TRUE, this argument defines the distance between dates within the specified time period. defaults
-to \code{year}, but other time periods such as \code{month} or \code{week} are also acceptable}
+\item{p_value}{\emph{numeric} || defaults to \code{0.9}
+
+The p value to be used as a threshold in the Multi-Site,
+Anomaly Detection, Cross-Sectional analysis}
+
+\item{time}{\emph{boolean} || defaults to \code{FALSE}
+
+A boolean to indicate whether to execute a longitudinal analysis}
+
+\item{time_span}{\emph{vector - length 2} || defaults to \code{c('2012-01-01', '2020-01-01')}
+
+A vector indicating the lower and upper bounds of the time series for longitudinal analyses}
+
+\item{time_period}{\emph{string} || defaults to \code{year}
+
+A string indicating the distance between dates within the specified time_span.
+Defaults to \code{year}, but other time periods such as \code{month} or \code{week} are
+also acceptable}
 }
 \value{
-a dataframe summarizing how often two events occur and co-occur within a patient record
+This function will return a dataframe summarizing the
+co-occurrence of events within a patient record. For a
+more detailed description of output specific to each check type,
+see the PEDSpace metadata repository
 }
 \description{
 This is a concordance module that will assess consistency within a patient
@@ -104,11 +142,10 @@ conn <- mk_testdb_omop()
 
 #' Establish connection to database and generate internal configurations
 initialize_dq_session(session_name = 'prc_process_test',
-                      working_directory = getwd(),
+                      working_directory = my_directory,
                       db_conn = conn,
                       is_json = FALSE,
-                      file_subdirectory = system.file('extdata',
-                                        package = 'patientrecordconsistency'),
+                      file_subdirectory = my_file_folder,
                       cdm_schema = NA)
 
 #' Build mock study cohort
@@ -136,7 +173,8 @@ prc_process_example <- prc_process(cohort = cohort,
                                    anomaly_or_exploratory = 'exploratory',
                                    time = FALSE,
                                    omop_or_pcornet = 'omop',
-                                   prc_event_file = prc_events)
+                                   prc_event_file = prc_events) \%>\%
+  suppressMessages()
 
 prc_process_example
 

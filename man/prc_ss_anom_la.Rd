@@ -26,3 +26,4 @@ is returned with outliers marked with orange dots
 \description{
 \emph{Single Site, Anomaly Detection, Longitudinal}
 }
+\keyword{internal}

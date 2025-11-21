@@ -19,6 +19,8 @@
 #' @return a dataframe with the proportion of patients that have event A, have event B,
 #'         have both events, or have neither event within their patient record
 #'
+#' @keywords internal
+#'
 compute_event_counts_pcnt <- function(cohort,
                                       grouped_list,
                                       site_col,
@@ -164,6 +166,7 @@ compute_event_counts_pcnt <- function(cohort,
 #' @return a dataframe containing the jaccard index of the two user defined events within
 #'         each follow up window as definted by grp_breaks
 #'
+#' @keywords internal
 #'
 compute_prc_ntanom_pcnt <- function(cohort,
                                     site_col,

@@ -25,6 +25,8 @@
 #' @importFrom rlang parse_expr
 #' @importFrom purrr set_names
 #'
+#' @keywords internal
+#'
 compute_event_counts_omop <- function(cohort,
                                       grouped_list,
                                       site_col,
@@ -168,6 +170,8 @@ compute_event_counts_omop <- function(cohort,
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr unite
+#'
+#' @keywords internal
 #'
 compute_prc_ntanom_omop <- function(cohort,
                                     site_col,

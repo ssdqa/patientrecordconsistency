@@ -80,3 +80,4 @@ a dataframe summarizing how often two events occur and co-occur within a patient
 \description{
 Patient Record Consistency -- OMOP
 }
+\keyword{internal}
