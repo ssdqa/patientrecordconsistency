@@ -1,0 +1,35 @@
+# Patient Record Consistency
+
+The Patient Record Consistency module assesses the presence of two
+user-defined events within each patient record of the cohort. This
+allows investigators to assess the consistency of event occurrences in
+the cohort.
+
+## Installation
+
+You can install the development version of this package like so:
+
+``` r
+devtools::install_github('ssdqa/patientrecordconsistency')
+```
+
+# Package index
+
+## Module Execution
+
+- [`prc_process()`](https://ssdqa.github.io/patientrecordconsistency/reference/prc_process.md)
+  : Patient Record Consistency
+- [`prc_output()`](https://ssdqa.github.io/patientrecordconsistency/reference/prc_output.md)
+  : Patient Record Consistency – Output Generation
+
+## Sample Input
+
+- [`prc_event_file`](https://ssdqa.github.io/patientrecordconsistency/reference/prc_event_file.md)
+  : PRC Sample Event File
+
+# Articles
+
+### All vignettes
+
+- [Multi-Site Analysis for Independent Data
+  Sources](https://ssdqa.github.io/patientrecordconsistency/articles/multisite_independent.md):
