@@ -127,62 +127,24 @@ prc_ms_exp_cs <- function(process_output,
            title = 'Proportion Patients with Each Event per Site')
   }else{
 
-    allsite_avs <- expand_cts %>%
-      summarise(eventb_mean = mean(event_b_num),
-                eventa_mean = mean(event_a_num)) %>%
-      mutate(site = 'all sites')
-
-    allsite_summs <- stat_labs %>%
-      group_by(stat_type) %>%
-      summarise(allsite_median = median(prop_event),
+    allsite_summs <- stat_labs %>% group_by(stat_type) %>%
+      summarise(allsite_median = median(prop_event, na.rm = TRUE),
                 allsite_q1 = stats::quantile(prop_event, 0.25),
-                allsite_q3 = stats::quantile(prop_event, 0.75)) %>%
-      mutate(site = 'all sites')
+                allsite_q3 = stats::quantile(prop_event, 0.75),
+                allsite_mean = mean(prop_event, na.rm = TRUE))
 
-    allsite_totpat <- process_output %>%
-      distinct(site, total_pts) %>%
-      summarise(total_pts = sum(total_pts)) %>%
-      mutate(site = 'all sites')
-
-    allsite_stats <- expand_cts %>%
-      mutate(site = 'all sites') %>%
-      left_join(allsite_avs) %>%
-      select(-total_pts) %>%
-      left_join(allsite_totpat) %>%
-      mutate(stat_type = case_when(event_a_num == 0 & event_b_num == 0 ~ 'Neither Event',
-                                   event_a_num == 0 & event_b_num != 0 ~ 'Event B Only',
-                                   event_a_num != 0 & event_b_num == 0 ~ 'Event A Only',
-                                   event_a_num != 0 & event_b_num != 0 ~ 'Both Events')) %>%
-      group_by(site, event_a_name, event_b_name, total_pts, stat_type,
-               eventa_mean, eventb_mean) %>%
-      summarise(stat_ct = n()) %>%
-      mutate(tooltip = case_when(stat_type == 'Neither Event' ~ 'Event Name: Neither',
-                                 stat_type == 'Event A Only' ~ paste0('Event Name: ', event_a_name),
-                                 stat_type == 'Event B Only' ~ paste0('Event Name: ', event_b_name),
-                                 stat_type == 'Both Events' ~ 'Event Name: Both'),
-             prop_event = stat_ct / total_pts,
-             tooltip = paste0(tooltip,
-                              '\nProportion: ', round(prop_event, 3),
-                              '\nAvg No. Event A: ', round(eventa_mean, 3),
-                              '\nAvg No. Event B: ', round(eventb_mean, 3))) %>%
-      left_join(allsite_summs)
-
-    g <- ggplot(allsite_stats, aes(y = site, x = prop_event)) +
-      geom_col_interactive(aes(tooltip = tooltip), fill = 'gray', show.legend = FALSE) +
-      geom_errorbar(aes(y=site, x=prop_event, xmin=allsite_q1, xmax=allsite_q3)) +
-      geom_point(aes(y = site, x = allsite_median)) +
-      geom_point_interactive(data = stat_labs %>% filter(site %in% large_n_sites),
-                             aes(x = prop_event, y = 'all sites', color = site,
-                                 tooltip = paste0('Site: ', site, '\nProp.: ', round(prop_event, 3))),
-                             shape = 8,size = 4) +
-      facet_wrap(~stat_type, ncol = 2) +
+    g <- ggplot(stat_labs %>% left_join(allsite_summs),
+                aes(y = stat_type, x = prop_event)) +
+      geom_boxplot_interactive(aes(tooltip = paste0('All Site Median: ', round(allsite_median, 2),
+                                                    '\nAll Site Mean: ', round(allsite_mean, 2))),
+                               show.legend = FALSE) +
+      geom_point_interactive(data = stat_labs %>%
+                               filter(site %in% large_n_sites),
+                             aes(x = prop_event, tooltip = tooltip, color = site),
+                             shape = 8, size = 4) +
       scale_color_squba() +
-      theme_minimal() +
-      guides(shape = 'none',
-             fill = 'none') +
-      labs(y = 'Site',
-           x = 'Proportion Patients',
-           title = 'Proportion Patients with Each Event') +
+      theme_minimal() + guides(shape = "none", fill = "none") +
+      labs(y = "Event Type", x = "Proportion Patients", title = "Proportion Patients with Each Event", color = 'Site') +
       coord_flip()
   }
 
