@@ -27,6 +27,7 @@ First, execute either of the **Single Site, Exploratory** analyses,
 configured appropriately for your study, against each data source.
 
 ``` r
+
 library(patientrecordconsistency)
 
 my_table <- prc_process(cohort = my_cohort,
@@ -54,6 +55,7 @@ analysis, configured appropriately for your study, against each data
 source.
 
 ``` r
+
 library(patientrecordconsistency)
 
 my_table <- prc_process(cohort = my_cohort,
@@ -77,6 +79,7 @@ through the `squba.gen` package. The `p_value` can be selected by the
 user.
 
 ``` r
+
 # First, execute the compute_dist_anomalies function
 df_start <- compute_dist_anomalies(df_tbl = my_table,
                                    grp_vars = c('fu_bin'),
@@ -100,6 +103,7 @@ pass it into the `ms_anom_euclidean` function, available through the
 `squba.gen` package.
 
 ``` r
+
 ## Additional formatting for the table
 event_categorization <- prc_tbl %>%
   uncount(pt_ct) %>%

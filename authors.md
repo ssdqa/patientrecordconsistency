@@ -17,7 +17,7 @@
 Source:
 [`DESCRIPTION`](https://github.com/ssdqa/patientrecordconsistency/blob/main/DESCRIPTION)
 
-Razzaghi H, Wieand K, Dickinson K, Bailey C (2025).
+Razzaghi H, Wieand K, Dickinson K, Bailey C (2026).
 *patientrecordconsistency: Evaluate the Consistency of Event Occurrence
 in Patient Records*. R package version 0.0.0.9000,
 <https://github.com/ssdqa/patientrecordconsistency>.
@@ -25,7 +25,7 @@ in Patient Records*. R package version 0.0.0.9000,
     @Manual{,
       title = {patientrecordconsistency: Evaluate the Consistency of Event Occurrence in Patient Records},
       author = {Hanieh Razzaghi and Kaleigh Wieand and Kimberley Dickinson and Charles Bailey},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.0.0.9000},
       url = {https://github.com/ssdqa/patientrecordconsistency},
     }
