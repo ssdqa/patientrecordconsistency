@@ -393,6 +393,7 @@ prc_ss_anom_cs <- function(process_output){
 #'         and a dot plot showing each site's average standard deviation away from the mean
 #'         index is returned instead
 #'
+#'
 #' @keywords internal
 #'
 prc_ms_anom_cs <- function(process_output,
@@ -411,9 +412,7 @@ prc_ms_anom_cs <- function(process_output,
                       "\nPatients w/ Both: ",cocount,
                       "\nPatients w/ Either: ",concept_count_union,
                       "\nMean Index:",round(mean_val,2),
-                      #'SD: ', round(sd_val,2),
                       "\nMedian Index: ",round(median_val,2)
-                      #"\nMAD: ", round(mad_val,2)
     )) %>%
     mutate(anomaly_yn = ifelse(anomaly_yn == 'no outlier in group', 'not outlier', anomaly_yn))
 
@@ -453,9 +452,7 @@ prc_ms_anom_cs <- function(process_output,
                           "\nPatients w/ Both: ",cocount,
                           "\nPatients w/ Either: ",concept_count_union,
                           "\nMean Index:",round(mean_val,2),
-                          #'SD: ', round(sd_val,2),
                           "\nMedian Index: ",round(median_val,2)
-                          #"\nMAD: ", round(mad_val,2)
         ))
 
       plt <- ggplot(dat_to_plot, aes(x = site, y = fu_bin, fill = jaccard_index,

@@ -102,7 +102,11 @@ prc_process_pcornet <- function(cohort,
                                                   grp_breaks = fu_breaks)
 
       prc_tbl_jacc <- prc_tbl_jacc_int$summary_output %>%
-        separate_wider_delim(cols = grp, delim = "_", names = c('site', 'fu_bin'))
+        separate_wider_delim(cols = grp, delim = "_[", names = c('site', 'fu_bin'),
+                             too_few = 'align_start') %>%
+        mutate(site = ifelse(is.na(fu_bin), stringr::str_remove(site, '_NA'),
+                             site),
+               fu_bin = ifelse(is.na(fu_bin), fu_bin, paste0('[', fu_bin)))
 
       prc_ptlv <- prc_tbl_jacc_int$pt_lv_output
 

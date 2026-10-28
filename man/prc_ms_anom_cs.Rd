@@ -28,7 +28,4 @@ across all sites
 \description{
 \emph{Multi Site, Anomaly Detection, Cross-Sectional}
 }
-\keyword{',}
-\keyword{SD:}
 \keyword{internal}
-\keyword{round(sd_val,2),}
