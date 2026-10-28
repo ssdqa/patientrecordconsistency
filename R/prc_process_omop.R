@@ -184,8 +184,8 @@ prc_process_omop <- function(cohort,
                                      event_a_num != 0 & event_b_num == 0 ~ 'Event A Only',
                                      event_a_num != 0 & event_b_num != 0 ~ 'Both Events')) %>%
         group_by(!!sym(site_col), time_start, time_increment, event_a_name, event_b_name, total_pts, stat_type) %>%
-        summarise(stat_ct = n(),
-                  prop_event = stat_ct / total_pts) %>% ungroup()
+        summarise(stat_ct = n()) %>%
+        mutate(prop_event = as.numeric(stat_ct / total_pts)) %>% ungroup()
 
       prc_tbl <- anomalize_ss_anom_la(fot_input_tbl = prc_expanded %>% distinct(),
                                       grp_vars = 'stat_type',
@@ -201,8 +201,8 @@ prc_process_omop <- function(cohort,
                                      event_a_num != 0 & event_b_num == 0 ~ 'Event A Only',
                                      event_a_num != 0 & event_b_num != 0 ~ 'Both Events')) %>%
         group_by(!!sym(site_col), time_start, time_increment, event_a_name, event_b_name, total_pts, stat_type) %>%
-        summarise(stat_ct = n(),
-                  prop_event = stat_ct / total_pts) %>% ungroup()
+        summarise(stat_ct = n()) %>%
+        mutate(prop_event = as.numeric(stat_ct / total_pts)) %>% ungroup()
 
       prc_tbl <- ms_anom_euclidean(fot_input_tbl = prc_expanded %>% distinct(),
                                    grp_vars = c('site', 'stat_type'),
