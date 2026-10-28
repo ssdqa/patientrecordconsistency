@@ -59,7 +59,8 @@ compute_event_counts_pcnt <- function(cohort,
 
 
       total_rslt[[i]] <- event_domain %>% ungroup() %>%
-        distinct(!!!syms(grouped_list), patid)
+        distinct(!!!syms(grouped_list), patid) %>%
+        compute_new()
     }
 
     join_cols <- set_names('concept_code', event_list[[i]]$concept_field)

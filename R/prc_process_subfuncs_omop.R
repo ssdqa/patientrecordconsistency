@@ -65,7 +65,8 @@ compute_event_counts_omop <- function(cohort,
 
 
       total_rslt[[i]] <- event_domain %>% ungroup() %>%
-        distinct(!!!syms(grouped_list), person_id)
+        distinct(!!!syms(grouped_list), person_id) %>%
+        compute_new()
       }
 
     join_cols <- set_names('concept_id', event_list[[i]]$concept_field)
